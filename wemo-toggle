@@ -1,0 +1,15 @@
+#!/bin/bash
+device=$1
+status=$(wemo -h "$device" -a GETSTATE)
+  case ${status} in
+    ON)
+      wemo -h "$device" -a OFF
+      notify-send "$device off"
+      ;;
+    OFF)
+      wemo -h "$device" -a ON
+      notify-send "$device on"
+      ;;
+    *)
+      exit 0
+  esac

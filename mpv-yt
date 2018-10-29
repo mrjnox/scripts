@@ -1,0 +1,7 @@
+#!/bin/bash
+clipboard=`xsel -b`
+if [ -z "$clipboard" ]; then
+	notify-send -u critical "mpv cannot load URL:" "cannot parse clipboard"
+else
+	mpv ${clipboard} &> /dev/null || notify-send -u critical "mpv cannot load URL:" "$clipboard"
+fi

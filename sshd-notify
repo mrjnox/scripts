@@ -1,0 +1,5 @@
+#!/bin/bash
+entry=`journalctl -qn 1 -u sshd`
+ip=`echo $entry | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`
+geo=`geoiplookup $ip | cut -d ' ' -f 4-`
+notify-send "Failed login" "$ip ($geo)"
