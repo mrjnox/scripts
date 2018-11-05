@@ -21,5 +21,7 @@ if [ $(pgrep -c conky) -eq 1 ]; then
 fi
 
 bspc rule -a URxvt:nmtui state=floating rectangle="$windowwidth"x"$windowheight"+"$windowx"+"$windowy" && urxvt -name nmtui -e nmtui
+
+# leave the network info on the screen temporarily
 sleep 10
 kill $conkypid 2> /dev/null
