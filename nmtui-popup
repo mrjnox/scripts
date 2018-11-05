@@ -1,0 +1,25 @@
+#/bin/bash
+conf=$HOME/.config/conky/conky-net.conf
+windowwidth=400
+windowheight=600
+
+screenwidth=$(xdpyinfo | awk -F'[ x]+' '/dimensions:/{print $3}')
+screenheight=$(xdpyinfo | awk -F'[ x]+' '/dimensions:/{print $4}')
+windowx=$(("$screenwidth"/2-"$windowwidth"/2))
+windowy=$(("$screenheight"/2-"$windowheight"/2))
+
+#echo $screenwidth
+#echo $screenheight
+#echo $windowx
+#echo $windowy
+
+# if we were called in the last 10 seconds, don't spawn yet another conky
+if [ $(pgrep -c conky) -eq 1 ]; then
+  echo "1 instance of conky is running"
+  conky -q -c "$conf" &
+  conkypid=$(echo $!)
+fi
+
+bspc rule -a URxvt:nmtui state=floating rectangle="$windowwidth"x"$windowheight"+"$windowx"+"$windowy" && urxvt -name nmtui -e nmtui
+sleep 10
+kill $conkypid 2> /dev/null
