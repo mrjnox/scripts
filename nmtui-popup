@@ -1,6 +1,6 @@
 #/bin/bash
 conf=$HOME/.config/conky/conky-net.conf
-windowwidth=400
+windowwidth=600
 windowheight=600
 
 screenwidth=$(xdpyinfo | awk -F'[ x]+' '/dimensions:/{print $3}')
@@ -21,7 +21,5 @@ if [ $(pgrep -c conky) -eq 1 ]; then
 fi
 
 bspc rule -a URxvt:nmtui state=floating rectangle="$windowwidth"x"$windowheight"+"$windowx"+"$windowy" && urxvt -name nmtui -e nmtui
-
-# leave the network info on the screen temporarily
 sleep 10
 kill $conkypid 2> /dev/null
